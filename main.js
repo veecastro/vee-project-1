@@ -8,14 +8,25 @@
 //    - flippedCards: an array to store the flipped cards
 //    - flipCardAudio: an audio element for the card flipping sound
 //    - gameWonAudio: an audio element for the game won sound
+const cards = document.querySelectorAll('.game-card');
+const timer = document.getElementById('.timer');
+const score = document.querySelector('span')
+const replay = document.getElementById('.replay')
 
 
-
+let hasFlippedCard = false;
+let lockBoard = false;
+let firstCard, secondCard;
 
 // 2. Shuffle the cards array to randomize the card order
-
+(function shuffle() {
+    cards.forEach(card => {
+      let randomPos = Math.floor(Math.random() * 12);
+      card.style.order = randomPos;
+    });
+  
 // 3. Attach click event listeners to the card elements
-
+cards.forEach(card => card.addEventListener('click', flipCard));
 // 4. Implement card click event handler:
 //    - Check if the game is active and the clicked card is not already flipped
 //    - Play the flip card audio
