@@ -1,3 +1,9 @@
+if (document.readyState == 'loading') {
+  document.addEventListener('DOMContentLoaded', ready);
+} else {
+  ready();
+}
+
 
 // 1. Initialize variables…
 //    - cards: an array of card objects with name and image properties
@@ -28,6 +34,7 @@ let firstCard, secondCard;
 // 3. Attach click event listeners to the card elements
 cards.forEach(card => card.addEventListener('click', flipCard));
 // 4. Implement card click event handler:
+
 //    - Check if the game is active and the clicked card is not already flipped
 //    - Play the flip card audio
 //    - Flip the card to show the image
@@ -91,5 +98,17 @@ cards.forEach(card => card.addEventListener('click', flipCard));
 
 // 14. Initialize the game:
 //     - Call the startGame function to begin the game
+function ready() {
+  let overlays = Array.from(document.getElementsByClassName('overlay-text'));
+  let cards = Array.from(document.getElementsByClassName('game-card'));
+
+  overlays.forEach(overlay => {
+    overlay.addEventListener('click', () => {
+        overlay.classList.remove('visible');
+        
+    });
+});
+}
+
 
 // 15. Continue gameplay until all cards are matched, the timer reaches the time limit, or the player chooses to replay the game

@@ -21,6 +21,7 @@ background-color: #eed7b9;
 justify-content: center;
 align-items: center;
 flex-direction: column;
+cursor: pointer;
   }
 
   .game-title {
@@ -67,18 +68,18 @@ font-family: 'Raleway', sans-serif;
   justify-content: center;
   align-items: center;
   position: absolute;
-  border-radius: 12px;
-  border-width: 1px;
-  border-style: solid;
+  border-radius: 10px;
+  border-width: 3px;
+  border-style: outset;
   transform-style: preserve-3d;
   transition: all 2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: (0 0 0.2) 0px 5px 15;
+  box-shadow: (0 0 0.5) 0px 5px 15;
   transform: scale(1);
   
 }
 
 .back-face {
-    background-image: url(images/grey-background.png);
+    background-image: url(green-checkers.png);
     backface-visibility: hidden;
    transform: rotateY(0);
 }
@@ -119,7 +120,7 @@ button {
         background-color: #59814e;
     }
 
-    .overlay-text {
+    /* .overlay-text {
         top: 0;
         left: 0;
         right: 0;
@@ -132,7 +133,8 @@ button {
         flex-direction: column;
         color: #57725a;
         font-family: 'Raleway', sans-serif;
-        transition: background-color 300ms, font-size 200ms;
+        transition: background-color 500ms, font-size 200ms;
+        cursor: pointer;
       }
       
       .overlay-text-small {
@@ -142,6 +144,7 @@ button {
       .overlay-text.visible {
         display: flex;
         animation: overlay-grow 500ms forwards;
+        cursor: pointer;
       }
       
       
@@ -154,11 +157,14 @@ button {
           background-color: rgba(0, 0, 0, .8);
           font-size: 10em;
         }
-      }
+      } */
 
       @media (max-width: 600px) {
-        grid-template-columns: repeat(2, auto);
-      }
+        .game-container {
+          grid-template-columns: repeat(2, auto);
+        }
+        
+      
       
    
       
