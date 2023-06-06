@@ -1,8 +1,11 @@
-if (document.readyState == 'loading') {
+if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', ready);
 } else {
   ready();
 }
+
+
+const cards = document.querySelectorAll('.game-card');
 
 
 // 1. Initialize variables…
@@ -14,31 +17,38 @@ if (document.readyState == 'loading') {
 //    - flippedCards: an array to store the flipped cards
 //    - flipCardAudio: an audio element for the card flipping sound
 //    - gameWonAudio: an audio element for the game won sound
-const cards = document.querySelectorAll('.game-card');
-const timer = document.getElementById('.timer');
-const score = document.querySelector('span')
-const replay = document.getElementById('.replay')
-
-
 let hasFlippedCard = false;
 let lockBoard = false;
 let firstCard, secondCard;
 
+// const timer = document.getElementById('.timer');
+// const score = document.querySelector('span')
+
+
+
 // 2. Shuffle the cards array to randomize the card order
-(function shuffle() {
+function shuffle() {
     cards.forEach(card => {
       let randomPos = Math.floor(Math.random() * 12);
       card.style.order = randomPos;
     });
-  
+}
 // 3. Attach click event listeners to the card elements
-cards.forEach(card => card.addEventListener('click', flipCard));
+
+
+
+function flipCard() {
+  this.classList.toggle('flip');
+  }
+  cards.forEach(card => card.addEventListener('click', flipCard));
+
 // 4. Implement card click event handler:
 
 //    - Check if the game is active and the clicked card is not already flipped
 //    - Play the flip card audio
 //    - Flip the card to show the image
 //    - Add the clicked card to the flippedCards array
+
 //    - If two cards are flipped:
 //      - Check if they match
 //        - If yes, keep them flipped and check if all cards are matched
@@ -46,6 +56,7 @@ cards.forEach(card => card.addEventListener('click', flipCard));
 //          - Increment the wrongGuesses counter
 //          - If the wrongGuesses reach the maximum allowed, end the game as a loss
 //    - Update the score display
+
 //    - Start the game timer if it hasn't started yet
 
 // 5. Implement game timer:
@@ -61,11 +72,49 @@ cards.forEach(card => card.addEventListener('click', flipCard));
 // 7. Implement audio elements:
 //    - Create audio elements for flip card and game won sounds
 //    - Play the audio elements at appropriate events
+const clickedCardAudio = document.getElementById("clicked-card");
+  clickedCardAudio.addEventListener('click', playClickSound);
+
+
+
+
+// Function to play sound for card click event
+function playClickSound() {
+  clickedCardAudio.play();
+}
+
+const winAudio = document.getElementById("win-game");
+// Function to play sound for winning event
+function playWinSound() {
+  winAudio.play();
+winAudio.volume = 0.5;
+WinAudio.currentTime = 0;
+}
+winAudio.addEventListener('ended', function() {
+  
+});
+
+// Function to play sound for losing event
+const gameLostAudio = document.getElementById("game-lost");
+function playLoseSound() {
+  gameLostAudioAudio.play();
+gameLostAudio.volume = 0.5;
+gameLostAudio.currentTime = 0;
+}
+gameLostAudioAudio.addEventListener('ended', function() {
+  
+});
+
+
+
+
+
 
 // 8. Implement a replay button:
 //    - Attach a click event listener to the replay button element
 //    - Call a function to reset the game and start a new game
-
+const replayButton = document.getElementById("replay");
+replayButton.addEventListener('click', restartGame);
 // 9. Display the wrong guess message:
 //    - Create an HTML element for the message container
 //    - Set the message text to "Wrong guess!"
@@ -98,17 +147,41 @@ cards.forEach(card => card.addEventListener('click', flipCard));
 
 // 14. Initialize the game:
 //     - Call the startGame function to begin the game
-function ready() {
-  let overlays = Array.from(document.getElementsByClassName('overlay-text'));
-  let cards = Array.from(document.getElementsByClassName('game-card'));
+// function ready() {
+//   let overlays = Array.from(document.getElementsByClassName('overlay-text'));
+//   let cards = Array.from(document.getElementsByClassName('game-card'));
 
-  overlays.forEach(overlay => {
-    overlay.addEventListener('click', () => {
-        overlay.classList.remove('visible');
+//   overlays.forEach(overlay => {
+//     overlay.addEventListener('click', () => {
+//         overlay.classList.remove('visible');
         
-    });
-});
-}
+//     });
+// });
+// }
 
+// if(document.readyState === 'loading') {
+//   document.addEventListener('DOMContentLoaded', ready);
+// } else {
+//   ready();
+// }
+
+// function ready() {
+//   let overlays = Array.from(document.getElementsByClassName('.overlay-text'));
+//   let Allcards = Array.from(document.getElementsByClassName('.game-card'));
+//   let game = new MixOrMatch(100, game-cards);
+
+//   overlays.forEach(overlay => {
+//       overlay.addEventListener('click', () => {
+//           overlay.classList.remove('visible');
+//           game.startGame();
+//       });
+//   });
+
+//   cards.forEach(card => {
+//       card.addEventListener('click', () => {
+//           game.flipCard(card);
+//       });
+//   });
+// }
 
 // 15. Continue gameplay until all cards are matched, the timer reaches the time limit, or the player chooses to replay the game
