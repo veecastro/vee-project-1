@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <script src="main.js"></script>
+    <script src="./main.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
@@ -14,14 +14,20 @@
 </head>
 <body>
     <h1 class="game-title">Memory Card Game</h1>
+
+
     <div class="overlay-text visible">
         Click to Start
       </div>
+
+
       <div id="game-over-text" class="overlay-text">
         GAME OVER
         <span class="overlay-text-small">Click to Restart</span>
       </div>
-      <div id="victory-text" class="overlay-text">
+
+
+      <div id="winning-text" class="overlay-text">
         You Won!
         <span class="overlay-text-small">Click to Restart</span>
          </div>
@@ -30,72 +36,74 @@
    <div class="game-container">
     <div class="game-info-container">
         <div class="game-info">
-            Timer: <span id="time-remaining">100</span></div>
+            Timer: <span id="time-remaining">20</span></div>
         <div class="game-info">
-            Score: <span id="flips">0</span></div></div>
+            Matches: <span id="matches">0</span></div></div>
        
-   <div class="game-card" info="herb">
+   <div class="card">
     <img class="front-face" src="images/herb.png" alt="herb">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="herb">
+   <div class="card">
     <img class="front-face" src="images/herb.png" alt="herb">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="mushroom">
+   <div class="card">
     <img class="front-face" src="images/mushroom.png" alt="mushroom">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="mushroom">
+   <div class="card">
     <img class="front-face" src="images/mushroom.png" alt="mushroom">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="sunflower">
+   <div class="card">
     <img class="front-face" src="images/sunflower.png" alt="sunflower">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="sunflower">
+   <div class="card">
     <img class="front-face" src="images/sunflower.png" alt="sunflower">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="sun_with_face">
+   <div class="card">
     <img class="front-face" src="images/sun_with_face.png" alt="sun_with_face">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="sun_with_face">
+   <div class="card">
     <img class="front-face" src="images/sun_with_face.png" alt="sun_with_face">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="hibiscus">
+   <div class="card">
     <img class="front-face" src="images/hibiscus.png" alt="hibiscus">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="hibiscus">
+   <div class="card">
     <img class="front-face" src="images/hibiscus.png" alt="hibiscus">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="lemon">
+   <div class="card">
     <img class="front-face" src="images/lemon.png" alt="lemon">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 
-   <div class="game-card" info="lemon">
+   <div class="card">
     <img class="front-face" src="images/lemon.png" alt="lemon">
-    <img class="back-face" src="images/green-checkers.png" alt="card">
+    <img class="back-face" src="images/green-checkers.png" alt="back-card">
    </div>
 </div>
+</div>
+</div>
 
-<button id="replay">Replay</button>
+
 
 <audio id="clicked-card" src="audio/clicked-card.mp3"></audio>
 <audio id="game-lost" src="audio/Game-lost.mp3"></audio>

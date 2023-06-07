@@ -1,187 +1,173 @@
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', ready);
-} else {
-  ready();
-}
+document.addEventListener("DOMContentLoaded", function () {
+  const cards = document.querySelectorAll(".card");
+  const overlayText = document.querySelector(".overlay-text");
+  const gameOverText = document.getElementById("game-over-text");
+  const winningText = document.getElementById("winning-text");
+  const restartButton = document.querySelector(".overlay-text-small");
+  const clickedCardSound = document.getElementById("clicked-card");
+  const gameLostSound = document.getElementById("game-lost");
+  const winGameSound = document.getElementById("win-game");
 
 
-const cards = document.querySelectorAll('.game-card');
+  let flippedCards = [];
+  let matchedCards = [];
+  let isClickable = false;
+  let timer;
+  let matchScore = 0;
 
 
-// 1. Initialize variables…
-//    - cards: an array of card objects with name and image properties
-//    - score: a variable to keep track of the player's score
-//    - timer: a variable to keep track of the game timer
-//    - isGameActive: a boolean variable to track if the game is active
-//    - wrongGuesses: a variable to count the number of wrong guesses
-//    - flippedCards: an array to store the flipped cards
-//    - flipCardAudio: an audio element for the card flipping sound
-//    - gameWonAudio: an audio element for the game won sound
-let hasFlippedCard = false;
-let lockBoard = false;
-let firstCard, secondCard;
-
-// const timer = document.getElementById('.timer');
-// const score = document.querySelector('span')
+  const timeRemainingElement = document.getElementById("time-remaining");
+  const matchesElement = document.getElementById("matches");
 
 
+  cards.forEach(function (card) {
+    card.addEventListener("click", flipCard);
+  });
 
-// 2. Shuffle the cards array to randomize the card order
-function shuffle() {
-    cards.forEach(card => {
-      let randomPos = Math.floor(Math.random() * 12);
-      card.style.order = randomPos;
+  overlayText.addEventListener("click", startGame);
+
+
+  function shuffleCards() {
+    cards.forEach(function (card) {
+      let randomPosition = Math.floor(Math.random() * cards.length);
+      card.style.order = randomPosition;
     });
-}
-// 3. Attach click event listeners to the card elements
-
-
-
-function flipCard() {
-  this.classList.toggle('flip');
   }
-  cards.forEach(card => card.addEventListener('click', flipCard));
 
-// 4. Implement card click event handler:
+  function flipCard() {
+    if (!isClickable || this.classList.contains("matched") || flippedCards.length === 2) return;
 
-//    - Check if the game is active and the clicked card is not already flipped
-//    - Play the flip card audio
-//    - Flip the card to show the image
-//    - Add the clicked card to the flippedCards array
+    this.classList.toggle("flipped");
+    clickedCardSound.play();
 
-//    - If two cards are flipped:
-//      - Check if they match
-//        - If yes, keep them flipped and check if all cards are matched
-//        - If no, play the wrong guess audio, display the wrong guess message, and reset the flipped cards after a delay
-//          - Increment the wrongGuesses counter
-//          - If the wrongGuesses reach the maximum allowed, end the game as a loss
-//    - Update the score display
+    flippedCards.push(this);
 
-//    - Start the game timer if it hasn't started yet
+    if (flippedCards.length === 2) {
+      isClickable = false;
+      let card1 = flippedCards[0];
+      let card2 = flippedCards[1];
 
-// 5. Implement game timer:
-//    - Use setInterval to increment the timer value every second
-//    - Check if the timer reaches the maximum allowed time
-//      - If yes, end the game as a loss
+      if (card1.innerHTML === card2.innerHTML) {
+        card1.classList.add("matched");
+        card2.classList.add("matched");
+        matchedCards.push(card1, card2);
+        flippedCards = [];
+        matchScore++;
 
-// 6. Implement game win condition:
-//    - Check if all cards are matched
-//      - If yes, end the game as a win
-//      - Play the game won audio
+        matchesElement.textContent = matchScore;
 
-// 7. Implement audio elements:
-//    - Create audio elements for flip card and game won sounds
-//    - Play the audio elements at appropriate events
-const clickedCardAudio = document.getElementById("clicked-card");
-  clickedCardAudio.addEventListener('click', playClickSound);
+        if (matchedCards.length === cards.length || matchScore === 6) {
+          gameWon();
+        } else {
+          isClickable = true;
+        }
+      } else {
+        setTimeout(function () {
+          card1.classList.remove("flipped");
+          card2.classList.remove("flipped");
+          flippedCards = [];
+          isClickable = true;
+        }, 1000);
+      }
+    }
+  }
 
+  function gameWon() {
+    clearInterval(timer);
+    winGameSound.play();
+    overlayText.classList.remove("visible");
+    winningText.classList.add("visible");
+    restartButton.addEventListener("click", restartGame);
+    overlayText.removeEventListener("click", startGame);
+    clickedCardSound.pause();
+    clickedCardSound.currentTime = 0;
+    restartButton.style.display = "block";
+  }
 
+  function gameOver() {
+    clearInterval(timer);
+    gameLostSound.play();
+    overlayText.classList.remove("visible");
+    gameOverText.classList.add("visible");
+   restartButton.addEventListener("click", restartGame);
+    clickedCardSound.pause();
+  clickedCardSound.currentTime = 0;
+  restartButton.style.display = "block";
+  }
 
+  function resetTimer() {
+    clearInterval(timer);
+    timeRemainingElement.textContent = "20";
+  }
 
-// Function to play sound for card click event
-function playClickSound() {
-  clickedCardAudio.play();
-}
-
-const winAudio = document.getElementById("win-game");
-// Function to play sound for winning event
-function playWinSound() {
-  winAudio.play();
-winAudio.volume = 0.5;
-WinAudio.currentTime = 0;
-}
-winAudio.addEventListener('ended', function() {
+  function startGame() {
+    resetTimer();
+    isClickable = true;
+    let timeRemaining = 20; 
+    timeRemainingElement.textContent = timeRemaining;
+    matchScore = 0;
   
+    shuffleCards();
+    timer = setInterval(function () {
+      timeRemaining--;
+  
+      if (timeRemaining === 0) {
+        gameOver();
+      }
+
+      timeRemainingElement.textContent = timeRemaining; 
+    }, 1000);
+    overlayText.classList.remove("visible");
+  }
+
+  function restartGame() {
+    resetTimer();
+    matchedCards = [];
+    flippedCards = [];
+    clearInterval(timer);
+
+    cards.forEach(function (card) {
+      card.classList.remove("flipped");
+      card.classList.remove("matched");
+    });
+
+    timeRemainingElement.textContent = "20";
+    matchesElement.textContent = "0";
+    overlayText.classList.add("hidden");
+    winningText.classList.remove("visible");
+    gameOverText.classList.remove("visible");
+    restartButton.addEventListener("click", restartGame);
+    // restartButton.style.display = "none";
+    restartButton.addEventListener("click", startGame); 
+    clickedCardSound.pause();
+    clickedCardSound.currentTime = 0;
+ 
+  }
+
 });
 
-// Function to play sound for losing event
-const gameLostAudio = document.getElementById("game-lost");
-function playLoseSound() {
-  gameLostAudioAudio.play();
-gameLostAudio.volume = 0.5;
-gameLostAudio.currentTime = 0;
-}
-gameLostAudioAudio.addEventListener('ended', function() {
-  
-});
 
 
 
 
 
 
-// 8. Implement a replay button:
-//    - Attach a click event listener to the replay button element
-//    - Call a function to reset the game and start a new game
-const replayButton = document.getElementById("replay");
-replayButton.addEventListener('click', restartGame);
-// 9. Display the wrong guess message:
-//    - Create an HTML element for the message container
-//    - Set the message text to "Wrong guess!"
-//    - Apply CSS styles to the message container
-//    - Append the message container to the game interface
 
-// 10. Update the score display:
-//     - Update the score element with the current score value
 
-// 11. Start the game:
-//     - Set isGameActive to true
-//     - Set score to 0
-//     - Set timer to 0
-//     - Set wrongGuesses to 0
-//     - Clear the flippedCards array
-//     - Start the timer
 
-// 12. End the game as a win:
-//     - Set isGameActive to false
-//     - Stop the timer
-//     - Display a "You won!" message
-//     - Play the game won audio
-//     - Enable the replay button
 
-// 13. End the game as a loss:
-//     - Set isGameActive to false
-//     - Stop the timer
-//     - Display a "You lost!" message
-//     - Enable the replay button
 
-// 14. Initialize the game:
-//     - Call the startGame function to begin the game
-// function ready() {
-//   let overlays = Array.from(document.getElementsByClassName('overlay-text'));
-//   let cards = Array.from(document.getElementsByClassName('game-card'));
 
-//   overlays.forEach(overlay => {
-//     overlay.addEventListener('click', () => {
-//         overlay.classList.remove('visible');
-        
-//     });
-// });
-// }
 
-// if(document.readyState === 'loading') {
-//   document.addEventListener('DOMContentLoaded', ready);
-// } else {
-//   ready();
-// }
 
-// function ready() {
-//   let overlays = Array.from(document.getElementsByClassName('.overlay-text'));
-//   let Allcards = Array.from(document.getElementsByClassName('.game-card'));
-//   let game = new MixOrMatch(100, game-cards);
 
-//   overlays.forEach(overlay => {
-//       overlay.addEventListener('click', () => {
-//           overlay.classList.remove('visible');
-//           game.startGame();
-//       });
-//   });
 
-//   cards.forEach(card => {
-//       card.addEventListener('click', () => {
-//           game.flipCard(card);
-//       });
-//   });
-// }
 
-// 15. Continue gameplay until all cards are matched, the timer reaches the time limit, or the player chooses to replay the game
+
+
+
+
+ 
+   
+ 
+
