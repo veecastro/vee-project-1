@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function flipCard() {
-    if (!isClickable || this.classList.contains("matched") || flippedCards.length === 2) return;
+    if (!isClickable || this.classList.contains("matched") || this.classList.contains("flipped") || flippedCards.length === 2) return;
 
     this.classList.toggle("flipped");
     clickedCardSound.play();
@@ -73,26 +73,29 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function gameWon() {
+    resetTimer();
     clearInterval(timer);
     winGameSound.play();
     overlayText.classList.remove("visible");
     winningText.classList.add("visible");
-    restartButton.addEventListener("click", restartGame);
-    overlayText.removeEventListener("click", startGame);
+    // restartButton.addEventListener("click", startGame);
+    // overlayText.addEventListener("click", startGame);
     clickedCardSound.pause();
     clickedCardSound.currentTime = 0;
     restartButton.style.display = "block";
+    restartButton.addEventListener("click", restartGame);
   }
 
   function gameOver() {
+    resetTimer();
     clearInterval(timer);
     gameLostSound.play();
     overlayText.classList.remove("visible");
     gameOverText.classList.add("visible");
-   restartButton.addEventListener("click", restartGame);
-    clickedCardSound.pause();
+  clickedCardSound.pause();
   clickedCardSound.currentTime = 0;
   restartButton.style.display = "block";
+  restartButton.addEventListener("click", restartGame);
   }
 
   function resetTimer() {
@@ -136,12 +139,15 @@ document.addEventListener("DOMContentLoaded", function () {
     overlayText.classList.add("hidden");
     winningText.classList.remove("visible");
     gameOverText.classList.remove("visible");
-    restartButton.addEventListener("click", restartGame);
-    // restartButton.style.display = "none";
-    restartButton.addEventListener("click", startGame); 
+    restartButton.addEventListener("click", startGame);
+    restartButton.removeEventListener("click", startGame);
+    // restartButton.addEventListener("click", restartGame);
+    // // restartButton.style.display = "none";
+    // restartButton.addEventListener("click", startGame); 
     clickedCardSound.pause();
     clickedCardSound.currentTime = 0;
- 
+    matchScore = 0;
+  startGame();
   }
 
 });

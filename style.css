@@ -92,7 +92,7 @@ cursor: pointer;
 .card.flipped {
   transform: rotateY(180deg);
   transform: scale(.95);
- transition: transform 0.2s; 
+ transition: transform 0.1s; 
  cursor: pointer;
   
 }
