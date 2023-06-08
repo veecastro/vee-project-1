@@ -12,6 +12,7 @@ The game board consists of twelve cards arranged randomly in a grid. The deck is
       -Try to complete the game by matching pairs quickly.
     
 # Game Demo
+<img width="1134" alt="Screenshot 2023-06-08 at 7 08 38 PM" src="https://github.com/veecastro/veronica-project-1/assets/133187872/be907fb5-3f6c-4f63-8e11-0939db4cc8c4">
 
 # Technologies 
     -HTML
