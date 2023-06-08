@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let flippedCards = [];
   let matchedCards = [];
   let isClickable = false;
-  let timer;
+  let timer = null;
   let matchScore = 0;
 
 
   const timeRemainingElement = document.getElementById("time-remaining");
-  const matchesElement = document.getElementById("matches");
+ const matchesElement = document.getElementById("matches");
 
 
   cards.forEach(function (card) {
@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   overlayText.addEventListener("click", startGame);
+  restartButton.addEventListener("click", restartGame);
+  winningText.addEventListener("click", restartGame);
+  gameOverText.addEventListener("click", restartGame);
 
 
   function shuffleCards() {
@@ -53,7 +56,8 @@ document.addEventListener("DOMContentLoaded", function () {
         matchedCards.push(card1, card2);
         flippedCards = [];
         matchScore++;
-
+        
+        
         matchesElement.textContent = matchScore;
 
         if (matchedCards.length === cards.length || matchScore === 6) {
@@ -78,11 +82,10 @@ document.addEventListener("DOMContentLoaded", function () {
     winGameSound.play();
     overlayText.classList.remove("visible");
     winningText.classList.add("visible");
-    // restartButton.addEventListener("click", startGame);
-    // overlayText.addEventListener("click", startGame);
     clickedCardSound.pause();
     clickedCardSound.currentTime = 0;
     restartButton.style.display = "block";
+    restartButton.removeEventListener("click", startGame);
     restartButton.addEventListener("click", restartGame);
   }
 
@@ -92,10 +95,12 @@ document.addEventListener("DOMContentLoaded", function () {
     gameLostSound.play();
     overlayText.classList.remove("visible");
     gameOverText.classList.add("visible");
-  clickedCardSound.pause();
-  clickedCardSound.currentTime = 0;
-  restartButton.style.display = "block";
-  restartButton.addEventListener("click", restartGame);
+    clickedCardSound.pause();
+    clickedCardSound.currentTime = 0;
+    restartButton.style.display = "block";
+    restartButton.removeEventListener("click", startGame);
+    restartButton.addEventListener("click", restartGame);
+   
   }
 
   function resetTimer() {
@@ -106,28 +111,29 @@ document.addEventListener("DOMContentLoaded", function () {
   function startGame() {
     resetTimer();
     isClickable = true;
-    let timeRemaining = 20; 
+    let timeRemaining = 20;
     timeRemainingElement.textContent = timeRemaining;
     matchScore = 0;
-  
+
     shuffleCards();
     timer = setInterval(function () {
       timeRemaining--;
-  
+
       if (timeRemaining === 0) {
         gameOver();
       }
 
-      timeRemainingElement.textContent = timeRemaining; 
+      timeRemainingElement.textContent = timeRemaining;
     }, 1000);
     overlayText.classList.remove("visible");
   }
 
   function restartGame() {
     resetTimer();
+    clearInterval(timer);
     matchedCards = [];
     flippedCards = [];
-    clearInterval(timer);
+    
 
     cards.forEach(function (card) {
       card.classList.remove("flipped");
@@ -139,17 +145,14 @@ document.addEventListener("DOMContentLoaded", function () {
     overlayText.classList.add("hidden");
     winningText.classList.remove("visible");
     gameOverText.classList.remove("visible");
-    restartButton.addEventListener("click", startGame);
-    restartButton.removeEventListener("click", startGame);
-    // restartButton.addEventListener("click", restartGame);
-    // // restartButton.style.display = "none";
-    // restartButton.addEventListener("click", startGame); 
+     restartButton.addEventListener("click", restartGame);
     clickedCardSound.pause();
     clickedCardSound.currentTime = 0;
     matchScore = 0;
+   
+  
   startGame();
   }
-
 });
 
 
@@ -173,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
- 
-   
- 
+
+
+
 
