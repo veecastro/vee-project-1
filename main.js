@@ -8,17 +8,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const gameLostSound = document.getElementById("game-lost");
   const winGameSound = document.getElementById("win-game");
 
-
   let flippedCards = [];
   let matchedCards = [];
   let isClickable = false;
   let timer = null;
   let matchScore = 0;
 
-
   const timeRemainingElement = document.getElementById("time-remaining");
- const matchesElement = document.getElementById("matches");
-
+  const matchesElement = document.getElementById("matches");
 
   cards.forEach(function (card) {
     card.addEventListener("click", flipCard);
@@ -29,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
   winningText.addEventListener("click", restartGame);
   gameOverText.addEventListener("click", restartGame);
 
-
   function shuffleCards() {
     cards.forEach(function (card) {
       let randomPosition = Math.floor(Math.random() * cards.length);
@@ -38,7 +34,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function flipCard() {
-    if (!isClickable || this.classList.contains("matched") || this.classList.contains("flipped") || flippedCards.length === 2) return;
+    if (
+      !isClickable ||
+      this.classList.contains("matched") ||
+      this.classList.contains("flipped") ||
+      flippedCards.length === 2
+    )
+      return;
 
     this.classList.toggle("flipped");
     clickedCardSound.play();
@@ -56,8 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         matchedCards.push(card1, card2);
         flippedCards = [];
         matchScore++;
-        
-        
+
         matchesElement.textContent = matchScore;
 
         if (matchedCards.length === cards.length || matchScore === 6) {
@@ -100,7 +101,6 @@ document.addEventListener("DOMContentLoaded", function () {
     restartButton.style.display = "block";
     restartButton.removeEventListener("click", startGame);
     restartButton.addEventListener("click", restartGame);
-   
   }
 
   function resetTimer() {
@@ -133,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function () {
     clearInterval(timer);
     matchedCards = [];
     flippedCards = [];
-    
 
     cards.forEach(function (card) {
       card.classList.remove("flipped");
@@ -145,38 +144,11 @@ document.addEventListener("DOMContentLoaded", function () {
     overlayText.classList.add("hidden");
     winningText.classList.remove("visible");
     gameOverText.classList.remove("visible");
-     restartButton.addEventListener("click", restartGame);
+    restartButton.addEventListener("click", restartGame);
     clickedCardSound.pause();
     clickedCardSound.currentTime = 0;
     matchScore = 0;
-   
-  
-  startGame();
+
+    startGame();
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
