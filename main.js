@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const cards = document.querySelectorAll(".card");
+  
+  // Constants
   const overlayText = document.querySelector(".overlay-text");
   const gameOverText = document.getElementById("game-over-text");
   const winningText = document.getElementById("winning-text");
@@ -9,12 +10,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const winGameSound = document.getElementById("win-game");
   const messageElement = document.getElementById("message");
 
+ // Variables
   let flippedCards = [];
   let matchedCards = [];
   let isClickable = false;
   let timer = null;
   let matchScore = 0;
 
+  //catched elements
+  const cards = document.querySelectorAll(".card");
   const timeRemainingElement = document.getElementById("time-remaining");
   const matchesElement = document.getElementById("matches");
 
@@ -22,11 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
     card.addEventListener("click", flipCard);
   });
 
+ // Event Listeners
   overlayText.addEventListener("click", startGame);
   restartButton.addEventListener("click", restartGame);
   winningText.addEventListener("click", restartGame);
   gameOverText.addEventListener("click", restartGame);
 
+ // Functions
   function shuffleCards() {
     cards.forEach(function (card) {
       let randomPosition = Math.floor(Math.random() * cards.length);
