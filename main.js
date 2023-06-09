@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const clickedCardSound = document.getElementById("clicked-card");
   const gameLostSound = document.getElementById("game-lost");
   const winGameSound = document.getElementById("win-game");
+  const messageElement = document.getElementById("message");
 
   let flippedCards = [];
   let matchedCards = [];
@@ -72,9 +73,16 @@ document.addEventListener("DOMContentLoaded", function () {
           card2.classList.remove("flipped");
           flippedCards = [];
           isClickable = true;
+          
+          displayMessage(" ");
         }, 1000);
+        displayMessage("Try again!");
       }
     }
+  }
+
+  function displayMessage(message) {
+    messageElement.textContent = message;
   }
 
   function gameWon() {
