@@ -122,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
     timeRemainingElement.textContent = "20";
   }
 
+  //initializes the game
   function startGame() {
     resetTimer();
     isClickable = true;
