@@ -17,12 +17,16 @@ The game board consists of twelve randomly arranged cards. The deck is made up o
       - The game is over when all pairs are matched or when time runs out.
       
       - Try to complete the game by matching pairs quickly.
-      
+
 ### Link
 [Click to Play Memory Card Game](https://memory-card-game-vc.netlify.app/)
 
 ## Screenshots
 <img width="1134" alt="Screenshot 2023-06-08 at 7 08 38 PM" src="https://github.com/veecastro/veronica-project-1/assets/133187872/be907fb5-3f6c-4f63-8e11-0939db4cc8c4">
+
+<img width="1134" alt="Screenshot 2023-06-08 at 9 21 49 PM" src="https://github.com/veecastro/veronica-project-1/assets/133187872/d8e01c5d-9d4b-486f-840c-78a7ca238171">
+
+<img width="1134" alt="Screenshot 2023-06-08 at 7 15 29 PM" src="https://github.com/veecastro/veronica-project-1/assets/133187872/7f51157a-0c27-4ca5-b332-168676ad73b6">
 
 <img width="1134" alt="Screenshot 2023-06-08 at 7 07 47 PM" src="https://github.com/veecastro/veronica-project-1/assets/133187872/61b41ea6-3f46-4a26-92e4-5f6c580bd3ab">
 
